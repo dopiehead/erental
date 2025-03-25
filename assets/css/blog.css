@@ -1,0 +1,75 @@
+.section-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 25px;
+}
+.vehicle-card {
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+    overflow: hidden;
+}
+.vehicle-img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+}
+.vehicle-details {
+    padding: 15px;
+}
+.vehicle-title {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+.tag-container {
+    margin-bottom: 12px;
+}
+.tag {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 15px;
+    font-size: 12px;
+    margin-right: 5px;
+    margin-bottom: 5px;
+}
+.tag-new {
+    background-color: #f8f8f8;
+    border: 1px solid #e0e0e0;
+}
+.tag-cylinder {
+    background-color: #f8f8f8;
+    border: 1px solid #e0e0e0;
+}
+.tag-yellow {
+    background-color: #FFF9C4;
+    border: 1px solid #FFF176;
+    color: #F57F17;
+}
+.tag-blue {
+    background-color: #E3F2FD;
+    border: 1px solid #90CAF9;
+    color: #1565C0;
+}
+.tag-fuel {
+    background-color: #f8f8f8;
+    border: 1px solid #e0e0e0;
+}
+.tag-used {
+    background-color: #f8f8f8;
+    border: 1px solid #e0e0e0;
+}
+.tag-turbo {
+    background-color: #E0F7FA;
+    border: 1px solid #80DEEA;
+    color: #00838F;
+}
+.vehicle-price {
+    font-weight: bold;
+    font-size: 18px;
+    margin-bottom: 5px;
+}
+.vehicle-location {
+    color: #666;
+    font-size: 13px;
+}

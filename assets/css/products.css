@@ -1,0 +1,190 @@
+/* navbar */
+
+
+/* end of navbar */
+.red-header {
+    background-color: #106d9b;
+    padding: 15px 0;
+}
+
+.sidebar {
+    border-right: 1px solid #eee;
+    padding-right: 20px;
+}
+
+.category-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 5px 0;
+    color: #666;
+}
+
+.category-count {
+    color: #999;
+}
+
+.product-grid{
+    display:flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+@media screen and (max-width: 768px){
+
+    .product-grid{
+
+         justify-content: center;
+  
+     }
+     
+
+}
+
+.product-card {
+    border: 1px solid #eee;
+    width:250px;
+    padding:8px;
+    margin-bottom: 20px;
+    transition: box-shadow 0.3s;
+}
+
+.product-card:hover {
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.product-image {
+    height: 200px !important;
+    object-fit: contain;
+}
+
+.price-range {
+    width: 100%;
+}
+
+.search-bar {
+    background-color: #f8f9fa;
+    padding: 15px;
+    margin-bottom: 20px;
+}
+
+.hot-label {
+    background-color: #ff3b3b;
+    color: white;
+    padding: 2px 8px;
+    border-radius: 3px;
+    font-size: 12px;
+}
+
+.price {
+    color: #ff3b3b;
+    font-weight: bold;
+}
+
+.meta-info{
+    font-size:13px;
+    display:flex;
+    justify-content:space-between;
+}
+
+.product-title{
+    font-weight:bold;
+}
+
+/* pagination button */
+
+/* Pagination Container */
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+/* Pagination Number */
+#page_num a {
+    padding: 8px 12px;
+    margin: 0 5px;
+    font-size: 14px;
+    color: #333;
+    text-decoration: none;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #f7f7f7;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+/* Active Page */
+#page_num a.active-button {
+    background-color: #007bff;
+    color: white;
+    border: 1px solid #007bff;
+}
+
+/* Hover Effects for Pagination Numbers */
+#page_num a:hover {
+    background-color: #007bff;
+    color: white;
+    border: 1px solid #007bff;
+}
+
+/* Previous and Next Button */
+#page_num .prev, #page_num .next {
+    font-size: 16px;
+    padding: 8px 12px;
+    margin: 0 5px;
+    color: #333;
+    text-decoration: none;
+    border: 1px solid #ccc;
+    background-color: #f7f7f7;
+    border-radius: 50%;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+/* Active Previous and Next Button */
+#page_num .prev.active-button, #page_num .next.active-button {
+    background-color: #007bff;
+    color: white;
+    border: 1px solid #007bff;
+}
+
+/* Previous and Next Button Hover Effects */
+#page_num .prev:hover, #page_num .next:hover {
+    background-color: #007bff;
+    color: white;
+    border: 1px solid #007bff;
+}
+
+
+.spinner-border{
+    display: none;
+}
+
+
+.nav-link:hover {
+    color: #dc3545;
+  }
+  
+  .nav-link.active {
+    color: #dc3545;
+  }
+  
+  .nav-link.active:after {
+    content: '';
+    position: absolute;
+    bottom: -3px;
+    left: 1rem;
+    right: 1rem;
+    height: 2px;
+    background-color: #dc3545;
+  }
+
+  .active-button{
+    color:green;
+  }
+
+  .btn-category{
+    cursor:pointer;
+  }
+
+

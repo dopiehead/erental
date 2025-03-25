@@ -1,0 +1,67 @@
+.sidebar {
+    background-color: #00c2cb;
+    min-height: 60vh;
+    color: white;
+}
+.sidebar .nav-link {
+    color: white;
+    padding: 10px 15px;
+}
+.sidebar .nav-link i {
+    margin-right: 10px;
+}
+.sidebar-header {
+    padding: 15px;
+    font-weight: bold;
+    border-bottom: 1px solid rgba(255,255,255,0.2);
+}
+.search-container {
+    padding: 15px;
+    background-color: #fff;
+    border-bottom: 1px solid #eee;
+}
+.search-box {
+    position: relative;
+}
+.search-btn {
+    position: absolute;
+    right: 0;
+    top: 0;
+    background-color: #00c2cb;
+    border: none;
+    height: 100%;
+}
+.hero-section {
+    background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('../../assets/images/background/bar.png') center/cover no-repeat;
+    color: white;
+    padding: 100px 0;
+    text-align: left;
+}
+.hero-text {
+    padding: 0 20px;
+}
+.hero-heading {
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+.hero-subtext {
+    font-size: 1.2rem;
+    margin-bottom: 30px;
+}
+.cta-button {
+    background-color: #00c2cb;
+    color: white;
+    border: none;
+    padding: 10px 25px;
+    border-radius: 5px;
+}
+.see-more {
+    padding: 10px 15px;
+    color: #333;
+    display: flex;
+    align-items: center;
+}
+.see-more i {
+    margin-left: 10px;
+}

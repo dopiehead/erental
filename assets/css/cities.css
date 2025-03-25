@@ -1,0 +1,45 @@
+
+.discovery-section {
+    padding: 30px 15px;
+}
+.section-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+.card {
+    border: none;
+    border-radius: 6px;
+    overflow: hidden;
+    margin-bottom: 15px;
+}
+.card-img-top {
+    height: 150px;
+    object-fit: cover;
+}
+.card-body {
+    padding: 10px 0;
+}
+.card-title {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+.location-count {
+    font-size: 12px;
+    color: #666;
+}
+/* Blue measurement indicator in the last image */
+.measurement-indicator {
+    position: relative;
+}
+.measurement-badge {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    background-color: #1a73e8;
+    color: white;
+    font-size: 12px;
+    padding: 2px 8px;
+    border-radius: 4px;
+}
