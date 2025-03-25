@@ -1,12 +1,5 @@
 <?php session_start(); 
-error_reporting(E_ALL);        // Report all errors
-ini_set('display_errors', 1);
-require ("../engine/config.php");
-$get_notifications = $conn->prepare("SELECT * FROM user_notifications WHERE recipient_id = ? and pending = 0");
-if($get_notifications->bind_param("i",$_SESSION['user_id'])){
-    $get_notifications->execute();
-    $result = $get_notifications->get_result(); ?>
-
+$user_id = isset($_SESSION['user_id']) ?? null;?>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -26,50 +19,60 @@ if($get_notifications->bind_param("i",$_SESSION['user_id'])){
 <body class='bg-light'>
 
      <div class='container mt-4 w-100'>
+     <?php 
+          error_reporting(E_ALL);        // Report all errors
+          ini_set('display_errors', 1);
+          require ("../engine/config.php");
+          $get_notifications = $conn->prepare("SELECT * FROM user_notifications WHERE recipient_id = ?");
+          $update_notifications = $conn->prepare("UPDATE user_notifications SET pending = 1 WHERE recipient_id = ?");
+          if($update_notifications->bind_param("i",$user_id)){
+             $update_notifications->execute();
+          }
+          include ("../engine/time_ago.php");
+          if($get_notifications->bind_param("i",$user_id)){
+                 $get_notifications->execute();
+                 $result = $get_notifications->get_result(); 
+                 while($row = $result->fetch_assoc()){ ?>
         
-  <?php  while($row = $result->fetch_assoc()): ?>
-        
-          <div class='px-2 py-2 d-flex justify-content-center align-items-center flex-row flex-column bg-white shadow-lg bg-white gap-3'>
-              <span>From: <b class='text-danger'>Admin</b></span>
+             <div class='px-2 py-2 d-flex justify-content-center align-items-center flex-row flex-column bg-white shadow-lg bg-white gap-3'>
+                  <span>From: <b class='text-danger'>Admin</b></span>
 
-             <div style =' display:flex; justify-content:space-between;' class='align-items-center w-100'>
-                 <span class='text-primary fa fa-bell fa-2x'></span>
-                 <h6 class='text-secondary fw-bold'><?= htmlspecialchars($row['message']) ?></h6>
-                  <span class='text-dark text-sm text-capitalize'><?= htmlspecialchars($row['date']) ?></span>
-             </div>
-               <div class='d-flex justify-content-end w-100'>
-                    <a style='cursor:pointer' class='btn-delete' id='<?= htmlspecialchars($row['id']) ?>'><span class='fa fa-trash  text-danger p-1'></span></a>
+                 <div style =' display:flex; justify-content:space-between;' class='align-items-center w-100'>
+                     <span class='text-primary fa fa-bell fa-2x'></span>
+                     <?php if ($row['pending']==0): ?>
+                     <h6 class='text-secondary fw-bold'><?= htmlspecialchars($row['message']) ?></h6>
+                     <?php else : ?>
+                     <h6 class='text-secondary'><?= htmlspecialchars($row['message']) ?></h6>
+                     <?php endif; ?>
+                     <span class='text-dark text-sm text-capitalize'><?= htmlspecialchars(timeAgo($row['date'])) ?></span>
                </div>
-
+               <div class='d-flex justify-content-end w-100'>
+                     <a style='cursor:pointer' class='btn-delete' id='<?= htmlspecialchars($row['id']) ?>'><span class='fa fa-trash  text-danger p-1'></span></a>
+               </div>
 
           </div>
 
       </div>
 
-  <?php 
-         endwhile;
-          
-  ?>
-    <?php   
-    
+       <?php 
+             }
         }
 
         else { ?>
 
         <div clsss='container'>
 
-        <div class='w-100 shadow-lg d-flex align-items-center justify-content-center  p-4'>
+              <div class='w-100 shadow-lg d-flex align-items-center justify-content-center  p-4'>
          
-             <span class='text-secondary'>You have no new notification</span>
+                  <span class='text-secondary'>You have no new notification</span>
         
-        </div>
+             </div>
 
-    </div>
+        </div>
 
     <?php
 
         }
-
    ?>
    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert2/11.15.10/sweetalert2.min.js" integrity="sha512-M60HsJC4M4A8pgBOj7oC/lvJXuOc9CraWXdD4PF+KNmKl8/Mnz6AH9FANgi4SJM6D9rqPvgQt4KRFR1rPN+EUw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
       <script>
@@ -89,21 +92,17 @@ if($get_notifications->bind_param("i",$_SESSION['user_id'])){
 
                             });
                         }
-                        else{
-                             
+                        else{                            
                              swal.Fire({
 
                                  title:"Notice",
                                  text:data,
                                  icon:"warning"
-
                                 
-                             });
+                            });
 
                         }
                     }
-      
-
             })
             
          });

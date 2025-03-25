@@ -31,21 +31,7 @@ ini_set('display_errors', 1);      // Display errors in the browser
     <link rel="stylesheet" href="../assets/css/wholesaler/wholesaler-dashboard.css">
 </head>
 <body class="bg-light">
-<nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom fixed-top">
-        <div class="container-fluid">
-            <a class="navbar-brand text-orange fw-bold" href="#">Eparts</a>
-            <div class="position-relative d-flex align-items-center">
-                <i class="fas fa-search search-icon"></i>
-                <input type="text" class="form-control search-input" placeholder="Search">
-            </div>
-            <div class="d-flex align-items-center gap-3">
-            <a href='notifications.php'><i class="fas fa-bell text-secondary"></i></a>
-                <img src="<?php echo"../" .htmlspecialchars($user_image); ?>" class="rounded-circle" width="32" height="32">
-                <span><?php echo htmlspecialchars($user_name); ?></span>
-                <i class="fas fa-chevron-down"></i>
-            </div>
-        </div>
-    </nav>
+<?php include ("components/navigator.php"); ?>
 <?php include ("components/side-bar.php"); ?>
 
     <!-- Main Content -->

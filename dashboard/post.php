@@ -43,38 +43,20 @@ if (isset($_SESSION['user_id']) && isset($_SESSION['user_role'])) {
 
 </head>
 <body class="bg-light">
-<nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom fixed-top">
-        <div class="container-fluid">
-            <a class="navbar-brand text-orange fw-bold" href="#">Eparts</a>
-            <div class="position-relative d-flex align-items-center">
-                <i class="fas fa-search search-icon"></i>
-                <input type="text" class="form-control search-input" placeholder="Search">
-            </div>
-            <div class="d-flex align-items-center gap-3">
-            <a href='notifications.php'><i class="fas fa-bell text-secondary"></i></a>
-                 <img src="<?php echo"../" .htmlspecialchars($user_image); ?>" class="rounded-circle" width="32" height="32">
-                 <span><?php echo htmlspecialchars($user_name); ?></span>
-                 <i class="fas fa-chevron-down"></i>
-            </div>
-        </div>
-    </nav>
+<?php include ("components/navigator.php"); ?>
     <!-- Navbar -->
       <?php include ("components/side-bar.php"); ?>
 
     <!-- Main Content -->
           <div class="main-content pt-2 my-3 px-2">
-
-              <h6 class='fw-bold mt-5'>Upload product</h6>
-              
+              <h6 class='fw-bold mt-5'>Upload product</h6>              
               <div class="container">
 
 <div class="row"> 
 
      <div class="col-md-6">
-         <br>
-    
+         <br>    
          <p><input type="checkbox" onclick="discount()" name="Discount">  Discount sales</p>
-
          <p><input type="checkbox" onclick="foreign()" name="foreign"> Foreign products</p>
          <?php if (date('N') == 7) { ?>
              <p><input type="checkbox" id="toggleButton"> Used products</p>
