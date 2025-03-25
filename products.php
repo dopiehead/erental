@@ -51,20 +51,40 @@
             </div>
         </div>
 
-        <?php 
-    if (!empty($is_search)) { ?>
-<script>
-   $(document).ready(function(){     
-       let search = "<?= htmlspecialchars($is_search) ?>";     
-       $("#q").val(search);
-       setTimeout(function() {  // ✅ Correct syntax
-           $("#q").trigger("keyup"); // ✅ Use "input" instead of "keyup" if needed
-       }, 500); // ✅ Delay of 500ms to ensure the field is updated
-   });
-</script>
+        <?php if (!empty($is_search) || !empty($is_category)) : ?>
+        <script>
+    $(document).ready(function () {
+        <?php if (!empty($is_search)) : ?>
+        const search = "<?= htmlspecialchars($is_search) ?>";
+        $("#q").val(search);
+        setTimeout(() => $("#q").trigger("keyup"), 500);
+        <?php endif; ?>
 
-<?php } 
-?>
+        <?php if (!empty($is_category)) : ?>
+        const category = "<?= htmlspecialchars(preg_replace('/_/', ' ', $is_category)) ?>".toLowerCase();
+        
+        function clickCategory() {
+            const categoryElement = $(".btn-category").filter(function () {
+                return $(this).text().trim().toLowerCase() === category;
+            });
+
+            if (categoryElement.length) {
+                console.log("Category found, clicking:", categoryElement.text());
+                categoryElement.addClass("active-button");
+
+                // Try `.click()` instead of `.trigger("click")`
+                setTimeout(() => categoryElement[0].click(), 300); 
+            } else {
+                console.log("No matching category found.");
+            }
+        }
+
+        setTimeout(clickCategory, 500);
+        <?php endif; ?>
+    });
+</script>
+<?php endif; ?>
+
 
         <div class="row">
             <div class="col-md-3 sidebar">
@@ -123,127 +143,7 @@
         </div>
     </div>
     <br><br>
-    <?php
-      if (!empty($is_category)) { ?>
-       <script>
-    $(document).ready(function(){
-        var category = "<?= htmlspecialchars(preg_replace("/_/"," ", $is_category)) ?>";    
-        console.log("Category to match:", category); // Debugging log
+ <script src='assets/js/fetch.js'></script>
 
-        function clickCategory() {
-            var categoryElement = $(".btn-category").filter(function() {
-                return $(this).text().trim().toLowerCase() === category.toLowerCase();
-            });
-
-            if (categoryElement.length) {
-                console.log("Category found, triggering click:", categoryElement.text()); // Debugging log
-                categoryElement.trigger("click");// Click the matching category
-                categoryElement.addClass("active-button");
-            } else {
-                console.log("No matching category found.");
-            }
-        }
-       
-        setTimeout(clickCategory, 500); // Adjust delay if needed
-    });
-  </script>
-<?php } ?>
-
-
-
-<script>
-    $(document).ready(function(){
-        // Load initial products
-        $(".spinner-border").hide();
-        $(".product-container").load("engine/fetch-all.php");
-
-        // Search functionality
-        $("#q").on("keyup", function(e){
-             e.preventDefault(); 
-             let x = $("#q").val(); 
-             getData(x); 
-        });
-
-        // Category filter functionality
-        $(".btn-category").on("click", function(e){
-            $(".btn-category").removeClass("active-button");
-            $(this).addClass("active-button");
-            e.preventDefault();
-            let x = $("#q").val(); 
-            let category = $(this).attr("id") || '';     
-            getData(x, category); 
-        });
-
-        // Condition filter (new, used) functionality
-        $(".btn-condition").on("change", function(e){  
-            e.preventDefault(); 
-            let x = $("#q").val(); 
-            let category = $(".btn-category").attr("id") || '';
-            let condition = $(".btn-condition").val() || ''; 
-            getData(x, category, condition); 
-        });
-
-        // Price range filter functionality
-        $(".price_range").on("change", function(){
-            var price_range = $(".price_range").val();
-            $(".price_info").html('<span class="text-success"><i class="fas fa-naira-sign"></i>' + price_range + '</span>');
-            let x = $("#q").val(); 
-            let category = $(".btn-category").attr("id") || '';
-            let condition = $(".btn-condition").val() || ''; 
-            getData(x, category, condition, price_range);
-        });
-
-        // Sorting functionality
-        $("#sort").on("change", function(e){
-            e.preventDefault();
-
-            let x = $("#q").val(); 
-            let category = $(".btn-category").attr("id") || '';
-            let condition = $(".btn-condition").val() || ''; 
-            let price_range = $(".price_range").val() || ''; 
-            let sort = $("#sort").val() || ''; 
-
-            getData(x, category, condition, price_range, sort);  
-        });
-
-        // Pagination functionality
-        $(document).on('click', '.btn-success', function(e){
-            e.preventDefault();
-            e.stopImmediatePropagation();
-
-            let x = $("#q").val(); 
-            let category = $(".btn-category").attr("id") || '';
-            let condition = $(".btn-condition").val() || ''; 
-            let price_range = $(".price_range").val() || ''; 
-            let sort = $("#sort").val() || '';  
-            var page = $(this).attr("id") || 1; // Default to page 1 if undefined
-            getData(x, category, condition, price_range, sort, page); 
-        });
-        // Function to fetch and display data
-        function getData(x, category, condition, price_range, sort, page = 1) {
-            $(".spinner-border").show(); // Show the spinner
-            $.ajax({
-                url: "engine/fetch-all.php", 
-                method: "POST",
-                data: { 
-                    q: x,
-                    category: category,
-                    condition: condition,
-                    price_range: price_range,
-                    sort: sort,
-                    page: page
-                }, 
-                success: function(data) {
-                    $(".spinner-border").hide(); // Hide the spinner after data is received
-                    $(".product-container").html(data);  // Update product container with new data
-                },
-                error: function(jqXHR, textStatus, errorThrown) {
-                    alert("Error: " + textStatus + ": " + errorThrown);
-                    $(".spinner-border").hide(); // Hide the spinner if there's an error
-                }
-            });
-        }
-    });
-</script>
 </body>
 </html>

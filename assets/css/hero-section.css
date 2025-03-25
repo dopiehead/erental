@@ -3,6 +3,15 @@
     min-height: 60vh;
     color: white;
 }
+
+@media screen and (max-width: 768px) {
+ 
+    .sidebar {
+      display: none;
+    }
+
+}
+
 .sidebar .nav-link {
     color: white;
     padding: 10px 15px;

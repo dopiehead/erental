@@ -9,11 +9,10 @@
                 <ul class="nav flex-column">
 
                     <li class="nav-item">
-                        <a class="nav-link d-flex justify-content-between align-items-center" href="#">
+                        <a class="nav-link d-flex justify-content-between align-items-center" href="products.php?category=car">
                             <div>
                                 <i class="fas fa-car"></i> Car
-                            </div>
-                            <i class="fas fa-chevron-down"></i>
+                            </div>                        
                         </a>
                     </li>
 
@@ -22,16 +21,16 @@
                             <div>
                                 <i class="fas fa-truck"></i> Trunk
                             </div>
-                            <i class="fas fa-chevron-down"></i>
+                        
                         </a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link d-flex justify-content-between align-items-center" href="#">
+                        <a class="nav-link d-flex justify-content-between align-items-center" href="products.php?category=conveyance">
                             <div>
                                 <i class="fas fa-bicycle"></i> Bike
                             </div>
-                            <i class="fas fa-chevron-down"></i>
+                          
                         </a>
                     </li>
 
@@ -40,46 +39,46 @@
                             <div>
                                 <i class="fas fa-seedling"></i> Plant
                             </div>
-                            <i class="fas fa-chevron-down"></i>
+                          
                         </a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link d-flex justify-content-between align-items-center" href="#">
+                        <a class="nav-link d-flex justify-content-between align-items-center" href="products.php?category=apartments">
                             <div>
                                 <i class="fas fa-building"></i> Apartments
                             </div>
-                            <i class="fas fa-chevron-down"></i>
+                       
                         </a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link d-flex justify-content-between align-items-center" href="#">
+                        <a class="nav-link d-flex justify-content-between align-items-center" href="products.php?category=electronic">
                             <div>
                                 <i class="fas fa-mobile-alt"></i> Electronic
                             </div>
-                            <i class="fas fa-chevron-down"></i>
+                      
                         </a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link d-flex justify-content-between align-items-center" href="#">
+                        <a class="nav-link d-flex justify-content-between align-items-center" href="products.php?category=fashion">
                             <div>
                                 <i class="fas fa-tshirt"></i> Clothes
                             </div>
-                            <i class="fas fa-chevron-down"></i>
+                      
                         </a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link d-flex justify-content-between align-items-center" href="#">
+                        <a class="nav-link d-flex justify-content-between align-items-center" href="products.php?category=cosmetics">
                             <div>
                                 <i class="fas fa-paint-brush"></i> Cosmetics
                             </div>
-                            <i class="fas fa-chevron-down"></i>
+                        
                         </a>
                     </li>
-                    
+
                 </ul>
                 <div class="see-more">
                     SEE MORE <i class="fas fa-arrow-right"></i>
