@@ -56,7 +56,7 @@
         <div class='card'>
             <div class='card-image'>
                 <!-- Output product image, using htmlspecialchars to escape it and prevent XSS -->
-                <a href='../product-details.php?id=<?php echo htmlspecialchars(base64_encode($product_id)); ?>'><img src='<?php echo"../". htmlspecialchars($product_image, ENT_QUOTES, 'UTF-8'); ?>'></a>
+                <a href='edit-product-details.php?id=<?php echo htmlspecialchars($product_id); ?>'><img src='<?php echo"../". htmlspecialchars($product_image, ENT_QUOTES, 'UTF-8'); ?>'></a>
             </div>
             <div class='card-body'>
                 <!-- Product name -->

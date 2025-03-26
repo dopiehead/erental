@@ -22,7 +22,11 @@
     <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js'></script>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat|sofia|Trirong|Poppins">
     <link rel="stylesheet" href="../assets/css/wholesaler/wholesaler-dashboard.css">
-
+     <style>
+        .spinner-border{
+            display:none;
+        }
+     </style>
 </head>
 <body class="bg-light">
 <?php include ("components/navigator.php"); ?>
@@ -39,7 +43,8 @@
                  <div id="messages_home" style="text-align: center;">
                      <div class="tab">
                           <a class="tablinks btn btn-primary"  id="defaultOpen" onclick="openCity(event,'London')">My profile</a>
-                          <a class="tablinks btn btn-trash" onclick="openCity(event,'Paris')">Edit Profile</a>
+                          <a class="tablinks btn btn-trash btn-light" onclick="openCity(event,'Paris')">Edit Profile</a>
+                          <a class="tablinks btn btn-secondary" onclick="openCity(event,'Lagos')">Identity proof</a>
 
                      </div>
 
@@ -48,53 +53,48 @@
 
 <div id="London" class="tabcontent">
 
- <table style="width: 100%;">
+     <table style="width: 100%;">
      <thead>
          <tr style="border-top: 2px solid rgba(192,192,192,0.4);border-bottom: 2px solid rgba(192,192,192,0.4);">
               <th style="padding:10px;" class="inbox" id="Home">Personal details</th>
          </tr>
      </thead>
- </table>
+     </table>
 
-<br><br>
+     <br><br>
 
  <small> <?php echo htmlspecialchars($user_name) ;?></small><br>
 
-<?php if (isset($_SESSION['user_id']) ) {
-?>
+      <?php if (isset($_SESSION['user_id']) ) {
+     ?>
 
-<small> 2347034497654</small><br>
+     <small> 2347034497654</small><br>
 
-<small class='fw-bold'><?= htmlspecialchars($_SESSION['user_role']);?></small><br>
+     <small class='fw-bold'><?= htmlspecialchars($_SESSION['user_role']);?></small><br>
 
-<?php
-}
-?>
-<?php if (isset($_SESSION['user_id']) ) {
-?>
+     <?php
+     }
+     ?>
+     <?php if (isset($_SESSION['user_id']) ) {
+     ?>
 
- <small> <?php  echo htmlspecialchars($user_phone);?></small><br>
+     <small> <?php  echo htmlspecialchars($user_phone);?></small><br>
 
+     <small>Dial code +234</small><br>
 
- <small>Dial code +234</small><br>
-
-<?php
-}
-?>
-
-<small><?php echo htmlspecialchars($user_email);?></small>
-
+      <?php
+     }
+     ?>
+       <small><?php echo htmlspecialchars($user_email);?></small>
      <br>
 
      <i class="fa-solid fa-user-alt"></i><br>
 
- <form id="editpage-form" method="post">
-
-     <input type="hidden" name="id" value="">
-     <input type="file" name="fileupload"><br><br>
-     <input type="submit" name="submit" id="submit" value="Change photo (Max 4MB)" class="btn btn-success " style="color: white;"><br>
-
- </form>
+      <form id="editpage-form" method="post">
+           <input type="hidden" name="id" value="">
+           <input type="file" name="fileupload"><br><br>
+           <input type="submit" name="submit" id="submit" value="Change photo (Max 4MB)" class="btn btn-success " style="color: white;"><br>
+     </form>
 
 </div>
 
@@ -104,7 +104,7 @@
 
 <h6>My profile</h6>
 
-<form id="editpage-details">
+  <form id="editpage-details">
 
      <input type="hidden"  name="sid" value="<?php echo htmlspecialchars($user_id); ?>">
 
@@ -223,17 +223,86 @@ while ($states = mysqli_fetch_array($getStates)) {
 
 </div>
 </div>
+
+<div id="Lagos" class="tabcontent">
+
+<h4 class='fw-bold'>Proof of Identity</h4>
+<br>
+<form id="verification_form" enctype="multipart/form-data" class='w-100'>
+<div class='d-flex justify-content-between align-items-center flex-md-row flex-column'>
+     <input type="hidden" name="user_id" value="<?= htmlspecialchars($userId) ?>">
+     <div style='border:2px dotted grey;' class='d-flex flex-column flex-row  rounded-4 px-2 py-4'>
+         <label style='font-weight:bold;' class='fw-bold mb-2 text-success' for="passport">Upload passport(max 1mb)</label>
+         <input name="passport" class='mt-1 border-0 form-control' type="file" capture="user" accept="image/*">
+     </div>
+
+     <div style='border:2px dotted grey;' class='d-flex flex-column flex-row  rounded-4 px-2 py-4'>
+         <label style='font-weight:bold' class='fw-bold mb-2 text-success' for="id_card">Upload valid ID card(max 1mb)</label>
+          <input name="valid_id" style='font-weight:bold;'  class='mt-1 form-control border-0' type="file" accept="image/*">
+     </div>
+   
+<br>
+
 </div>
 
+<div class='container d-flex justify-content-center'>
+<button name='proof_of_identity_button' class='proof_of_identity_button btn border border-muted border-2 rounded bg-warning shadow form-control text-white mt-5'><span class='spinner-border text-dark'></span><span class='submit_note'>Upload</span></button>
+<div>
 
-    </div>
-
-
-
-    </div>
+</div>
+</form>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+    <script>
+    $(document).ready(function(){
+        $(".spinner-border").hide(); // Hide spinner initially
+        
+        $("#verification_form").on("proof_of_identity_button", function(e){ // Fix: Use `#` for ID selector
+            e.preventDefault(); // Prevent default form submission
+            
+            $(".spinner-border").show();  // Show spinner
+            $(".submit_note").hide();  // Hide note
+            $(".proof_of_identity_button").prop("disabled", true); // Disable button
+            
+            var formData = new FormData();
+            
+            $.ajax({
+                type: "POST",
+                url: "engine/verify-data.php",
+                data: new FormData(this), 
+                success: function(response){
+                    $(".spinner-border").hide(); // Hide spinner
+                    $(".submit_note").show(); // Show note
+                    $(".proof_of_identity_button").prop("disabled", false); // Re-enable button
+                    
+                    if(response.trim() === "success") {
+
+                        swal({
+                            title:"Success",
+                            text:"Verification successful!",
+                            icon:"success",
+                        });
+                      
+                    } else {
+                        swal({
+                            
+                            title:"Verification failed"
+                            icon:"warning",
+                            text:response
+
+                        });
+                    }
+                },
+                error: function(err){
+                    $(".spinner-border").hide();
+                    $(".proof_of_identity_button").prop("disabled", false);
+                    console.log(err)
+                }
+            });
+        });
+    });
+</script>
 
 
 <script>
@@ -254,45 +323,30 @@ evt.currentTarget.className += " active";
 document.getElementById("defaultOpen").click();
 </script>
 
+
+
 <script type="text/javascript">
-
-$('#editpage-form').on('submit',function(e){
-
-if (confirm("Are you sure to change this?")) {
-
- e.preventDefault();
-
-$(".loading-image").show();
-
-
-var formdata = new FormData();
-   $.ajax({
-           type: "POST",
-
-           url: "../../engine/changeprofilepic.php",
-
-           data:new FormData(this),
-
-           cache:false,
-
-           processData:false,
-
-           contentType:false,
-
-           success: function(response) {
-
-           $(".loading-image").hide();
-
-          if(response==1){
-
-            swal({
-
-          text:"Image has been changed",
-          icon:"success",
-        });
-       $('#bom').load(location.href + " #my");
-}
-
+     $('#editpage-form').on('submit',function(e){
+     if (confirm("Are you sure to change this?")) {
+          e.preventDefault();
+          $(".loading-image").show();
+         var formdata = new FormData();
+          $.ajax({
+              type: "POST",
+               url: "../../engine/changeprofilepic.php",
+               data:new FormData(this),  
+               cache:false,
+               processData:false,
+               contentType:false,
+               success: function(response) {
+               $(".loading-image").hide();
+               if(response==1){
+                  swal({
+                      text:"Image has been changed",
+                      icon:"success",
+                  });
+                     $('#bom').load(location.href + " #my");
+                }
 else
  { 
   swal({

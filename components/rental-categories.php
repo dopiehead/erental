@@ -1,6 +1,9 @@
 
     <div class="container category-container">
-        <h2 class="category-title">RENTALS</h2>
+        <div class='d-flex justify-content-between align-items-center'>
+             <h2 class="category-title">RENTALS</h2>
+             <h6><a class='text-dark text-decoration-none' href='products.php'>See more <span class='text-success fw-bold fa fa-chevron-right'></span></a></h6>
+        </div>
         
         <div class="row">
            

@@ -8,7 +8,7 @@
             <div class="d-flex align-items-center gap-3">
             <a href='notifications.php'><i class="fas fa-bell text-secondary"></i>
             <?php 
-                $count_notification = $conn->prepare("SELECT count(*) FROM `user_notifications` WHERE `recipient_id` = ? AND pending = 0");
+                $count_notification = $conn->prepare("SELECT count(*) AS count FROM `user_notifications` WHERE `recipient_id` = ? AND pending = 0");
                 if($count_notification->bind_param("i",$_SESSION['user_id'])){
                     $count_notification->execute();
                     $res = $count_notification->get_result();

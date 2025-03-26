@@ -22,7 +22,7 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav mx-auto">
                     <li class="nav-item">
-                        <a class="nav-link active" href="#" style="color: #00CED1;">Home</a>
+                        <a class="nav-link active" href="index.php" style="color: #00CED1;">Home</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="products.php">Categories</a>

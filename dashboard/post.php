@@ -16,7 +16,7 @@ if ($key_variable) {
 }
 if (isset($_SESSION['user_id']) && isset($_SESSION['user_role'])) { 
     if ($_SESSION['user_role'] == 'Customer') {
-        header("Location: ../customer/customer-dashboard.php");
+        header("Location:profile.php");
         exit();
     } else {
       $userId = $_SESSION['user_id']; 

@@ -110,7 +110,7 @@
                     <div class="hero-text">
                         <h1 class="hero-heading">WE GOT YOU<br>COVERED</h1>
                         <p class="hero-subtext">Looking for where to rent your<br>equipment's, cars, etc.<br>look no further.</p>
-                        <button class="cta-button">Check Out</button>
+                        <button href='products.php' id='cta-button' class="cta-button ">Check Out</button>
                     </div>
                 </div>
             </div>
@@ -125,5 +125,16 @@
              window.location.href = "products.php?search="+search;
          }
      });
+
+     </script>
+
+      <script>
+        $(document).on("click","#cta-button",function(e){
+            e.preventDefault();                    
+         let check_out = $(this).attr("href");
+         if(check_out.length > 0){
+               window.location.href = "products.php";
+         }
+    });
     </script>
 

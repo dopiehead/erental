@@ -1,11 +1,12 @@
-<?php session_start();
+<?php
+error_reporting(E_ALL);  // Report all types of errors
+ini_set('display_errors', 1); // Display errors on the screen
+ini_set('display_startup_errors', 1);
 
 if (isset($_GET['id'])) {
     require("engine/config.php");
-
     // Sanitize and validate the input id.
     $id = intval($_GET['id']);
-
     // Prepare and execute query to fetch user profile.
     $stmt = $conn->prepare("SELECT * FROM user_profile WHERE id = ?");
     if (!$stmt) {
@@ -15,7 +16,7 @@ if (isset($_GET['id'])) {
     $stmt->execute();
     $result = $stmt->get_result();
     $user = $result->fetch_assoc();
-    $stmt->close();
+    $stmt->close(); 
 
     if ($user) {
         // Include additional user content.
@@ -34,10 +35,8 @@ if (isset($_GET['id'])) {
         $profileResult = $get_seller_profile->get_result();
         $profileData = $profileResult->fetch_assoc();
         $seller_views = $profileData['views'];
-        $get_seller_profile->close();
-
+       
         // You can now use $seller_views as needed.
-
     } else {
         // If no user is found, redirect.
         header("Location: product-details.php?id=" . base64_encode($id));
@@ -46,16 +45,13 @@ if (isset($_GET['id'])) {
 }
 ?>
 
-
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script> 
     <?php include ("components/links.php"); ?>
     <link rel="stylesheet" href="assets/css/store.css">
-    <link rel="stylesheet" href="assets/css/banner-signup.css">
+    <link rel="stylesheet" href="assets/css/banner.css">
     <title><?= htmlspecialchars($user_type) ?></title>
 
 </head>
@@ -80,7 +76,7 @@ if (isset($_GET['id'])) {
                                 <h2 class="card-title"><?=htmlspecialchars($user_name); ?>  <span class='fw-bold text-muted text-sm'> - <?= htmlspecialchars($user_type); ?></span></h2>
                                 <p class="text-muted mb-2">
                                     <i class="fas fa-location-dot me-2"></i>
-                                    <?if($user_address!==''){ ?>
+                                    <?php if($user_address!==''){ ?>
                                     <?= htmlspecialchars($user_address); ?>
                                     <?php } else { ?>
                                      <span class='text-secondary text-sm '>No location enlisted yet.</span>
@@ -100,7 +96,6 @@ if (isset($_GET['id'])) {
                                 <span class="text-muted">4.34</span>
                             </div>
                            <?php endif; ?>
-
 
                         </div>
                         
@@ -142,10 +137,7 @@ if (isset($_GET['id'])) {
                         </div>
 
                         <div class="mt-3">
-                            <a href='products.php?search=drink' class="badge bg-secondary me-2 text-decoration-none text-white">Drink</a>
-                            <a href='products.php?search=soft drink' class="badge bg-secondary me-2 text-decoration-none text-white">Soft drink</a>
-                            <a href='products.php?search=yellow' class="badge bg-secondary me-2 text-decoration-none text-white">Yellow</a>
-                            <a href='products.php?search=fruits' class="badge bg-secondary me-2 text-decoration-none text-white">Fruit</a>
+                            
                             <a href='products.php?seach=cheap' class="badge bg-secondary text-decoration-none text-white">Cheap</a>
                         </div>
 
@@ -168,7 +160,6 @@ if (isset($_GET['id'])) {
             </div>
         </div>
 
-
      <div class='w-100 mt-4 text-center'>
       
          <div id='spinner'>
@@ -185,7 +176,6 @@ if (isset($_GET['id'])) {
 
      </div>
 
-
      <iframe
           src="https://www.google.com/maps?q=<?php echo urlencode($user_address); ?>&output=embed"
           class="w-100 h-auto"
@@ -195,13 +185,11 @@ if (isset($_GET['id'])) {
           onload="hideSpinner()">
       </iframe>
 
-
      </div>
 
     </div>
 
 <!--   product-lists -->
-
 
     <div class="container py-4">
         <div class="row">
@@ -211,11 +199,12 @@ if (isset($_GET['id'])) {
                 <div class="categories-list">
                     <?php 
                     require("engine/config.php");
-                    $getsearch=$conn->prepare("SELECT COUNT(*) AS count, product_category FROM products GROUP BY product_category"); 
+                    $getsearch=$conn->prepare("SELECT COUNT(*) AS count, poster_id, product_name, product_category FROM products  WHERE poster_id = ? GROUP BY product_category"); 
+                    $getsearch->bind_param("i", $user['id']);
                     if($getsearch->execute()){
                         $result = $getsearch->get_result();
                         while($row = $result->fetch_assoc()){ ?>
-                            <a href="products.php?search=<?= htmlspecialchars($row['product_name']); ?>" class="category-link  text-decoration-none text-capitalize"><?= htmlspecialchars($row['product_category']); ?> <span>(<?= htmlspecialchars($row['count']); ?>)</span></a>  
+                            <a href="products.php?category=<?= htmlspecialchars($row['product_category']); ?>" class="category-link text-decoration-none text-capitalize"><?= htmlspecialchars(preg_replace("/_/","&",$row['product_category'])); ?> <span>(<?= htmlspecialchars($row['count']); ?>)</span></a>  
                    <?php
                    
                         }
@@ -237,7 +226,7 @@ if (isset($_GET['id'])) {
                     </div>
                 </div>
 
-                <h5 class="mb-4">Wholesale</h5>
+                <h5 class="mb-4">Vendor</h5>
 
                 <!-- Products Grid -->
                 <div class="row g-4">
@@ -268,9 +257,9 @@ if (isset($_GET['id'])) {
                     <!-- Product Card 1 -->
                     <div class="col-md-3">
                         <div class="product-card">
-                            <img src="<?php echo htmlspecialchars($product_image) ?>" alt="Hands Up Bottle" class="img-fluid">
+                            <img src="<?=htmlspecialchars($product_image) ?>" alt="<?=htmlspecialchars($product_name); ?>" class="img-fluid">
                             <div class="p-3">
-                                <h6><?php echo htmlspecialchars($product_name); ?> - Bottle</h6>
+                                <h6 class='text-capitalize'><?=htmlspecialchars(preg_replace("/_/","&",$product_name)); ?></h6>
                                 <div class="text-warning mb-2">
                                     <i class="fas fa-star"></i>
                                     <i class="fas fa-star"></i>
@@ -281,10 +270,10 @@ if (isset($_GET['id'])) {
                                 <div class="text-muted mb-2">
                                                                  
                                 <?php
-                                    if($discountPercentage > 0):
+                                    if($product_discount > 0):
                                          echo htmlspecialchars($discountedPrice);
                                     else:
-                                         echo htmlspecialchars($originalPrice);
+                                         echo htmlspecialchars($product_price);
                                      endif;
                                 
                                 ?>
@@ -293,7 +282,7 @@ if (isset($_GET['id'])) {
                                 <div class="quantity-control mb-2">
                              
                                 </div>
-                                <a href='product-details.php?id=<?php echo htmlspecialchars(base64_encode($product_id));?>' class="btn btn-primary w-100">Buy</a>
+                                <a href='product-details.php?id=<?php echo htmlspecialchars(base64_encode($product_id));?>' class="btn btn-primary w-100">Rent</a>
                             </div>
                         </div>
                     </div>
@@ -311,122 +300,9 @@ if (isset($_GET['id'])) {
 
    <!-- photo gallery part -->
 
-    <div class="container py-4">
-        <!-- Photo Gallery Section -->
-        <section class="mb-5">
-            <h4 class="mb-3 fw-bold">Photo gallery</h4>
-            <div class="row g-3 mt-2">
-            <?php 
-
-// Prepare the statement to select images where sid matches
-$getmore = $conn->prepare("SELECT * FROM picx WHERE sid = ?");
-
-if ($getmore) {
-    // Bind the parameter (assuming $user_id is an integer)
-    $getmore->bind_param('i', $user_id);
-
-    // Execute the query
-    if ($getmore->execute()) {
-        // Get the result set
-        $moreproducts = $getmore->get_result();
-
-        // Loop through each row
-        while ($product = $moreproducts->fetch_assoc()) {
-            // Check if 'pictures' column exists and is not empty
-            if (!empty($product['pictures'])) {
-                // Assuming 'pictures' column stores comma-separated image URLs
-                $more_pictures = explode(",", $product['pictures']);
-
-                foreach ($more_pictures as $picture) {
-                    ?>
-                    <div class="col-md-3">
-                        <img src="<?php echo htmlspecialchars(trim($picture)); ?>" alt="Store display" class="gallery-img">
-                    </div>
-                    <?php
-                }
-            }
-        }
-    } else {
-        echo "Error executing query.";
-    }
-
-    // Close the statement
-    $getmore->close();
-} else {
-    echo "Error preparing statement.";
-    header("Location: product-details.php?id=" . base64_encode($id));
-    exit;
-}
-?>            
-            </div>
-        </section>
-
-        <!-- Other Choices Section -->
-        <section>
-            <h4 class="mb-4">Other choices for import</h4>
-            <div class="row g-4">
-                <!-- Business Card 1 -->
-                   <?php 
-    $stmt = $conn->prepare("SELECT * FROM user_profile WHERE user_type = 'importer' AND verified = 1");
-    if(!$stmt){
-        echo "<span class='text-muted mt-4 px-2'>No user profile found</span>";
-    }
-    else{
-        $stmt->execute();
-        $result = $stmt->get_result();
-        if($result){
-            while($row = $result->fetch_assoc()){
-?>
-                <a href="store.php?id=<?php echo htmlspecialchars($row['id']);?>" class="business-link">
-                    <div class="col-md-3">
-                        <div class="business-card position-relative">
-                            <img src="<?php echo htmlspecialchars($row['user_image']); ?>" alt="Jay's and Josh" class="business-img">
-                            <button class="share-btn">
-                                <i class="fas fa-share-alt"></i>
-                            </button>
-                            <div class="p-3">
-                                <h5 class="mb-2"><?php echo htmlspecialchars($row['user_name']); ?></h5>
-                                <p class="text-muted small mb-2">
-                                    <i class="fas fa-location-dot me-1"></i>
-                                    <?= htmlspecialchars($row['user_address']); ?>
-                                </p>
-                                <div class="d-flex align-items-center justify-content-between">
-                                    <div class="text-warning">
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star-half-alt"></i>
-                                    </div>
-                                    <span class="rating-badge">4.34</span>
-                                </div>
-                                <div class="mt-2">
-                                    <span class="badge bg-primary">
-                                        <i class="fas fa-thumbs-up me-1"></i>324
-                                    </span>
-                                    <span class="badge bg-danger ms-1">
-                                        <i class="fas fa-heart me-1"></i>193
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </a>
-<?php  
-            }
-        } else {
-            echo "No user found";
-        }
-        $stmt->close();
-    }
-?>
-
-                <!-- Additional cards... -->
-            </div>
-        </section>
-    </div>
+   
     
-    <?php include ("components/banner-signup.php"); ?>
+    <?php include ("components/banner.php"); ?>
     <br><br>
     <div class="container mt-5">
         <h3 class="text-center fw-bold mb-4">THIS PLACES RECEIVED THE BEST REVIEWS THIS WEEK</h3>
@@ -463,8 +339,7 @@ if ($getmore) {
                     </div>
                 </div>
             </div>
-        <?php } }  } ?>    
-         
+        <?php } }  } ?>         
           
         </div>
     </div>
