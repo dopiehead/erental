@@ -2,10 +2,8 @@
      if(isset($_SESSION['user_id'])){
          $userId = $_SESSION['user_id'];
          require("../engine/config.php");
-         include("contents/profile-contents.php");
-         
+         include("contents/profile-contents.php");         
      }
-
      else{
          header("Location:../../index.php");
          exit();
@@ -15,15 +13,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wholesaler Dashboard</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js'></script>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat|sofia|Trirong|Poppins">
-    <link rel="stylesheet" href="../assets/css/wholesaler/wholesaler-dashboard.css">
-    <link rel="stylesheet" href="../assets/css/wholesaler/wholesaler-products.css">
+     <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <title>Wholesaler Dashboard</title>
+     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
+     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+     <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js'></script>
+     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat|sofia|Trirong|Poppins">
+     <link rel="stylesheet" href="../assets/css/wholesaler/wholesaler-dashboard.css">
+     <link rel="stylesheet" href="../assets/css/wholesaler/wholesaler-products.css">
 
 </head>
 <body class="bg-light">
@@ -33,11 +31,11 @@
 
 
     <!-- Main Content -->
-    <div class="main-content pt-3 my-4 px-2">
+     <div class="main-content pt-3 my-4 px-2">
 
-    <h6 class='fw-bold mt-5 mb-3'>My products</h6>
+     <h6 class='fw-bold mt-5 mb-3'>My customers</h6>
      
-    <div class='d-flex justify-content-evenly align-items-center flex-wrap gap-3 mt-1'>
+     <div class='d-flex justify-content-evenly align-items-center flex-wrap gap-3 mt-1'>
     
     <?php 
 
@@ -77,10 +75,10 @@
      ?>
 
 </div>
-    </div>
-    </div>
+     </div>
+     </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
-    </body>
-    </html>
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+     </body>
+     </html>

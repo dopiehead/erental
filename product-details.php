@@ -114,10 +114,14 @@ if (isset($_GET['id'])) {
 
                 <div class="price mb-3">
                     <?php if ($discountPercentage > 0): ?>
-                        <del class="text-muted me-2">₦<?= htmlspecialchars($discountedPrice) ?></del>
+                        <del class="text-muted me-2">₦<?= htmlspecialchars($product_price) ?></del>
                         ₦<?= htmlspecialchars($discountedPrice) ?> <span class="badge bg-danger"><?= htmlspecialchars($discountPercentage) ?>% OFF</span>
-                    <?php else: ?>
-                        <i class="fas fa-naira-sign"></i> <?= htmlspecialchars(number_format($product_price,2)); ?>
+                    <?php else: ?>                   
+                        <select style='font-size:17px;' class='border-0 text-danger' name="" id=""> 
+                            <option value="">₦<?= htmlspecialchars(number_format($product_price, 2)); ?> - One month</option>
+                            <option value="">₦<?= htmlspecialchars(number_format(ceil($product_price / 7), 2)); ?> - One week</option>
+                            <option value="">₦<?= htmlspecialchars(number_format(ceil($product_price / 30), 2)); ?> - One day</option>
+                        </select>
                     <?php endif; ?>
                 </div>
 

@@ -2,9 +2,21 @@
 error_reporting(E_ALL);  // Report all types of errors
 ini_set('display_errors', 1); // Display errors on the screen
 ini_set('display_startup_errors', 1);
+session_start();
+require("engine/config.php");
 
-if (isset($_GET['id'])) {
-    require("engine/config.php");
+if(isset($_SESSION['user_id']) && !empty($_SESSION['user_id'])):
+    $buyer_location = $conn->prepare("SELECT * FROM user_profile WHERE id =  ?");
+    $buyer_location->bind_param('i',$_SESSION['user_id']);
+    if($buyer_location->execute()){
+        $buyer_result = $buyer_location->get_result();
+         while($buyer_data = $buyer_result->fetch_assoc()) {
+         $buyerLocation =  $buyer_data['user_address'].",".$buyer_data['user_location'].".";
+         }
+    }
+endif;
+
+if (isset($_GET['id'])) {   
     // Sanitize and validate the input id.
     $id = intval($_GET['id']);
     // Prepare and execute query to fetch user profile.
@@ -21,7 +33,7 @@ if (isset($_GET['id'])) {
     if ($user) {
         // Include additional user content.
         include("contents/user-contents.php");
-        
+        $userLocation = $user_address.",".$user_location.".";
         $extension = strtolower(pathinfo($user_image,PATHINFO_EXTENSION));
         $image_extension  = array('jpg','jpeg','png'); 
         
@@ -43,12 +55,15 @@ if (isset($_GET['id'])) {
         exit();
     }
 }
+include ("distance.php");
+
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script> 
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script> 
     <?php include ("components/links.php"); ?>
     <link rel="stylesheet" href="assets/css/store.css">
     <link rel="stylesheet" href="assets/css/banner.css">
@@ -138,7 +153,7 @@ if (isset($_GET['id'])) {
 
                         <div class="mt-3">
                             
-                            <a href='products.php?seach=cheap' class="badge bg-secondary text-decoration-none text-white">Cheap</a>
+                            <a href='products.php?search=cheap' class="badge bg-secondary text-decoration-none text-white">Cheap</a>
                         </div>
 
                         <div class="mt-4">
@@ -149,7 +164,16 @@ if (isset($_GET['id'])) {
                                 <span class="badge bg-danger">
                                     <i class="fas fa-eye me-1"></i><?= htmlspecialchars($seller_views);?> views
                                 </span>
+
+                                <span class="badge bg-success">
+                                    <a text-white onclick="share()"><i class="fas fa-share-alt me-1"></i> Share</a>
+                                </span>
+
                             </div>
+                        </div>
+
+                        <div class="mt-3 px-2">
+                             <span><b class='fw-bold text-primary'><i class='fas fa-car'></i> Distance from you is</b> <?= htmlspecialchars($distance)."m"; ?> </span>
                         </div>
 
                         <div class="mt-4">
@@ -164,7 +188,7 @@ if (isset($_GET['id'])) {
       
          <div id='spinner'>
 
-             <div class="spinner-border text-primary" role="status">
+              <div class="spinner-border text-primary" role="status">
 
                  <span class="sr-only">Loading...</span>
 
@@ -177,7 +201,7 @@ if (isset($_GET['id'])) {
      </div>
 
      <iframe
-          src="https://www.google.com/maps?q=<?php echo urlencode($user_address); ?>&output=embed"
+          src="https://www.google.com/maps?q=<?= urlencode($user_address); ?>&output=embed"
           class="w-100 h-auto"
           style="border:0;"
           allowfullscreen=""
@@ -188,9 +212,7 @@ if (isset($_GET['id'])) {
      </div>
 
     </div>
-
 <!--   product-lists -->
-
     <div class="container py-4">
         <div class="row">
             <!-- Categories Sidebar -->
@@ -235,10 +257,8 @@ if (isset($_GET['id'])) {
 
                    // Prepare the statement to select products where poster_id matches
                      $getposter = $conn->prepare("SELECT * FROM products WHERE poster_id = ?");
-
                      // Bind the poster_id parameter (assuming $poster_id is already set somewhere)
                      $poster = $getposter->bind_param('i', $user_id);
-
                      // Check if the binding was successful
                      if(!$poster) {
                              echo "Error in getting poster"; 
@@ -248,7 +268,6 @@ if (isset($_GET['id'])) {
                             $getposter->execute();
                             // Get the result from the query
                              $products = $getposter->get_result();
-
                              // Loop through all products
                               while($product = $products->fetch_assoc()) {
                              // Include your user-content file for each product
@@ -282,7 +301,7 @@ if (isset($_GET['id'])) {
                                 <div class="quantity-control mb-2">
                              
                                 </div>
-                                <a href='product-details.php?id=<?php echo htmlspecialchars(base64_encode($product_id));?>' class="btn btn-primary w-100">Rent</a>
+                                <a href='product-details.php?id=<?= htmlspecialchars(base64_encode($product_id));?>' class="btn btn-primary w-100">Rent</a>
                             </div>
                         </div>
                     </div>
@@ -297,11 +316,7 @@ if (isset($_GET['id'])) {
             </div>
         </div>
     </div>
-
    <!-- photo gallery part -->
-
-   
-    
     <?php include ("components/banner.php"); ?>
     <br><br>
     <div class="container mt-5">
@@ -319,7 +334,7 @@ if (isset($_GET['id'])) {
                       $result = $stmt_reviews->get_result();
                       if($result){
                       while($row = $result->fetch_assoc()){?>
-                           <a href="store.php?id=<?php echo htmlspecialchars($row['id']);?>" class="business-link">
+                           <a href="store.php?id=<?=htmlspecialchars($row['id']);?>" class="business-link">
 
             <div class="col-md-4">
                 <div class="card review-card">
@@ -327,7 +342,7 @@ if (isset($_GET['id'])) {
                         <span class="badge bg-primary"> <i class="fas fa-thumbs-up"></i> 324</span>
                         <span class="badge bg-danger"> <i class="fas fa-heart"></i> 123</span>
                     </div>
-                    <a href='store.php?id=<?= htmlspecialchars($row['id']);?>'><img src="<?php echo htmlspecialchars($row['user_image']) ?>" alt="Store Image"></a>
+                    <a href='store.php?id=<?= htmlspecialchars($row['id']);?>'><img src="<?=htmlspecialchars($row['user_image']) ?>" alt="Store Image"></a>
                     <div class="card-body">
                         <button class="btn btn-light share-btn"> <i class="fas fa-share"></i> </button>
                         <h5 class="card-title"><?= htmlspecialchars($row['user_name']); ?></h5>
@@ -344,9 +359,9 @@ if (isset($_GET['id'])) {
         </div>
     </div>
 
-    <br><br><br><br>
-    
-    
+    <br><br>
+    <br><br>
+       
     <?php include ("components/footer.php");?>
   
     <script>
@@ -356,9 +371,8 @@ if (isset($_GET['id'])) {
             $(".spinner-border").hide();
          }
 
-
-    </script>
-       <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+     </script>
+     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
         
 </body>
 </html>

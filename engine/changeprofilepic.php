@@ -9,10 +9,8 @@ if (!isset($_POST['id']) || empty($_POST['id']) || !ctype_digit($_POST['id'])) {
 
 $myid = $_POST['id']; // Already validated as integer
 
-// Determine Upload Folder (Default)
 $imageFolder = "uploads/";
 
-// If user session exists, set folder for buyers
 if (isset($_SESSION['id']) && !empty($_SESSION['id'])) {
     $imageFolder = "uploads/buyers/";
 }

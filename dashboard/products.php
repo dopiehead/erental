@@ -56,13 +56,13 @@
         <div class='card'>
             <div class='card-image'>
                 <!-- Output product image, using htmlspecialchars to escape it and prevent XSS -->
-                <a href='edit-product-details.php?id=<?php echo htmlspecialchars($product_id); ?>'><img src='<?php echo"../". htmlspecialchars($product_image, ENT_QUOTES, 'UTF-8'); ?>'></a>
+                <a href='edit-product-details.php?id=<?= htmlspecialchars($product_id); ?>'><img src='<?php echo"../". htmlspecialchars($product_image, ENT_QUOTES, 'UTF-8'); ?>'></a>
             </div>
             <div class='card-body'>
                 <!-- Product name -->
-                <h5 class='card-title'><?php echo htmlspecialchars($product_name, ENT_QUOTES, 'UTF-8'); ?></h5>
+                <h5 class='card-title text-capitalize'><?= htmlspecialchars(preg_replace("/_/"," ",$product_name)); ?></h5>
                 <!-- Product price with currency symbol, formatted as a number -->
-                <p class='card-text'>Price: <i class='fas fa-naira-sign'></i><?php echo number_format($product_price, 2); ?></p>
+                <p class='card-text'>Price: <i class='fas fa-naira-sign'></i><?= number_format($product_price, 2); ?></p>
             </div>
         </div>
 

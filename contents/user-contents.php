@@ -11,4 +11,5 @@ $user_address = $user['user_address'] ?? 'Unknown';
 $user_rating = $user['user_rating'] ?? 0; // Default rating to 0
 $verified = $user['verified'] ?? 0; // Default to unverified
 $date_added = $user['date_added'] ?? date("Y-m-d H:i:s"); // Use current date if missing
+
 ?>

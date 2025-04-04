@@ -171,20 +171,6 @@ while ($row = mysqli_fetch_array($query_category)) {
       
 </div>
 
-
-<div class='col-md-2'>
-
-     <select name="product_condition" id="product_condition">
-          <option value="">Choose Condition</option>
-          <option value="new">New</option>
-          <option value="tokunbo">Tokunbo</option>
-
-     </select>
-  
-</div>
-
-
-
 </div>
 
 
@@ -220,7 +206,7 @@ while ($row = mysqli_fetch_array($query_category)) {
 
   <div class="col-md-3">
     
-      <select name="price_denomination"  class="border border-1 border-mute ">
+      <select name="price_denomination"  class="border border-1 border-mute form-control">
 
           <option value="">Denomination</option>
           <option value="200">200</option>

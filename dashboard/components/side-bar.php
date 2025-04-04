@@ -1,12 +1,14 @@
 <!-- Sidebar -->     
 <div class="sidebar pt-5 px-3">         
     <div class="pt-4">             
-        <ul class="nav flex-column">                 
+        <ul class="nav flex-column">
+
             <li class="nav-item">                     
                 <a class="nav-link" href="../index.php">
                     <i class="fas fa-home me-2"></i> Home
                 </a>                 
-            </li>                 
+            </li>  
+
             <li class="nav-item">                     
                 <a class="nav-link active-dashboard" href="<?php                                           
                                         
@@ -31,8 +33,7 @@
                 <a class="nav-link active-customers" href="../dashboard/customers.php">
                     <i class="fas fa-user-friends me-2"></i> Customers
                 </a>                 
-            </li>                  
-                           
+            </li>                                             
                
             <li class="nav-item">                     
                 <a class="nav-link" href="../dashboard/products.php">
@@ -45,19 +46,15 @@
                     <i class="fas fa-paper-plane me-2"></i> Posts
                 </a>                 
             </li>  
-        
-            
+                   
             <li class="nav-item">                     
                 <a class="nav-link" href="../dashboard/sold-history.php">
                     <i class="fas fa-file me-2"></i> Sold history
                 </a>                 
             </li>     
-
-                       
+                      
             <?php endif; ?>  
-            
-            
-                        
+                                  
             <li class="nav-item">                     
                 <a class="nav-link" href="../dashboard/order-history.php">
                     <i class="fas fa-file me-2"></i> Order history
@@ -70,7 +67,6 @@
                 </a>                 
             </li>  
             
-
             <li class="nav-item">                     
                 <a class="nav-link" href="../dashboard/logout.php">
                     <i class="fas fa-sign-out me-2"></i> Logout

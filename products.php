@@ -1,4 +1,4 @@
-<?php
+<?php session_start();
    $is_category = isset($_GET['category']) && !empty($_GET['category']) ? preg_replace("/ /", "_", strtolower(trim($_GET['category']))) : " ";
    $is_search = isset($_GET['search']) && !empty($_GET['search']) ? preg_replace("/ /", "+", strtolower(trim($_GET['search']))) : " ";
    require("engine/config.php"); 
@@ -79,7 +79,7 @@
             }
         }
 
-        setTimeout(clickCategory, 500);
+        setTimeout(clickCategory, 300);
         <?php endif; ?>
     });
 </script>

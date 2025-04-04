@@ -1,5 +1,4 @@
-<?php 
-session_start();
+<?php session_start();
 require("engine/config.php");
 // Enable error reporting
 error_reporting(E_ALL);        // Report all types of errors

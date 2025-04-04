@@ -39,8 +39,8 @@
                 <div class="nav-icons ms-lg-auto">
                    
                     <a href="cart.php"><i class="fas fa-shopping-cart"></i></a>
-                     <?php if(isset($_SESSION['user_id'])) : ?>
-                    <a href="profile.php"><i class="fas fa-user-alt"></i></a>
+                     <?php if(isset($_SESSION['user_id']) && !empty($_SESSION['user_id'])) : ?>
+                    <a href="dashboard/profile.php"><i class="fas fa-user-alt"></i></a>
                     <?php else : ?>
                         <a href="sign-in.php"><i class="fas fa-user-alt"></i></a>
                     <?php endif; ?>

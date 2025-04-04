@@ -49,12 +49,14 @@ if (isset($_GET['id'])) {
                             <label for="product_details" class="form-label">Product Details</label>
                             <textarea name="product_details" class="form-control" id="product_details" rows="4" required><?= htmlspecialchars($product['product_details']) ?></textarea>
                         </div>
-
+                        <?php if (!empty($product['product_color'])) : ?>
                         <!-- Product color -->
                         <div class="mb-3">
                             <label for="product_color" class="form-label">Product Color</label>
                             <input type="text" name="product_color" value="<?= htmlspecialchars($product['product_color']) ?>" class="form-control" id="product_color" required>
                         </div>
+                         
+                         <?php endif; ?>
 
                         <!-- Discount percentage -->
                         <div class="mb-3">
